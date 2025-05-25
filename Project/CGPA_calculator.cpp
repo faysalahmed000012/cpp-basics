@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cstring>
+#include <iomanip>
 
 using namespace std;
 
@@ -23,56 +24,68 @@ public:
     }
 
     // get grade
-    float getGrade()
+    pair<float, string> getGrade()
     {
-        float grade = {};
+        float grade = 0.0;
+        string letterGrade;
+
         if (mark >= 80)
         {
             grade = 4.0;
+            letterGrade = "A+";
         }
-        else if (mark > 75 && mark < 79)
+        else if (mark >= 75)
         {
             grade = 3.75;
+            letterGrade = "A";
         }
-        else if (mark > 70 && mark < 74)
+        else if (mark >= 70)
         {
             grade = 3.50;
+            letterGrade = "A-";
         }
-        else if (mark > 65 && mark < 69)
+        else if (mark >= 65)
         {
             grade = 3.25;
+            letterGrade = "B+";
         }
-        else if (mark > 60 && mark < 64)
+        else if (mark >= 60)
         {
             grade = 3.00;
+            letterGrade = "B";
         }
-        else if (mark > 55 && mark < 59)
+        else if (mark >= 55)
         {
             grade = 2.75;
+            letterGrade = "B-";
         }
-        else if (mark > 50 && mark < 54)
+        else if (mark >= 50)
         {
             grade = 2.50;
+            letterGrade = "C+";
         }
-        else if (mark > 45 && mark < 49)
+        else if (mark >= 45)
         {
             grade = 2.25;
+            letterGrade = "C";
         }
-        else if (mark > 40 && mark < 44)
+        else if (mark >= 40)
         {
             grade = 2.00;
+            letterGrade = "D";
         }
         else
         {
             grade = 0.00;
-        };
+            letterGrade = "F";
+        }
 
-        return grade;
+        return {grade, letterGrade};
     }
 
     float gpXch()
     {
-        return getGrade() * creditHour;
+        return getGrade().first * creditHour;
     }
 };
 
@@ -87,7 +100,9 @@ int main()
          << "\n"
          << "Please Enter Your Number of Courses First and Hit Enter. Eg: 5" << endl
          << "\n"
-         << "After that, Enter Each Course Name, Obtained Number (out of 100) and Credit for the Course." << endl;
+         << "After that, Enter Each Course Name, Obtained Number (out of 100) and Credit for the Course." << endl
+         << "\n"
+         << "Enter Number of Courses : ";
 
     cin >> numberOfCourses;
 
@@ -110,7 +125,7 @@ int main()
     CGPA = totalGpXCh / totalCreditHour;
 
     cout << endl
-         << "Your Total CGPA is : " << CGPA << endl
+         << "Your Total CGPA is : " << fixed << setprecision(1) << CGPA << endl
          << "\n"
          << "Wish you All the Best!" << endl
          << "\n"
@@ -120,7 +135,7 @@ int main()
 
     for (Subject course : courses)
     {
-        cout << "Name : " << course.name << ", Mark : " << course.mark << ", Grade : " << course.getGrade() << ", Credit Hour : " << course.creditHour << ", Grade X Credit : " << course.gpXch() << endl;
+        cout << "Name : " << course.name << ", Mark : " << course.mark << ", Grade : " << course.getGrade().first << ", Letter Grade : " << course.getGrade().second << ", Credit Hour : " << course.creditHour << ", Grade X Credit : " << course.gpXch() << endl;
     }
 
     return 0;
